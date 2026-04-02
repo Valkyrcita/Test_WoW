@@ -100,6 +100,7 @@
             align-items: center;
             gap: 12px;
             font-size: 0.95em;
+            position: relative;
         }
 
         .option:hover {
@@ -166,6 +167,16 @@
             color: #64748b;
             margin-bottom: 20px;
             font-size: 0.95em;
+        }
+
+        .result-text a {
+            color: #8b5cf6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .result-text a:hover {
+            text-decoration: underline;
         }
 
         .restart {
@@ -246,15 +257,15 @@
             <div class="question active" data-question="1">
                 <h2>1. ¿Cuál raza escogerías para jugar?</h2>
                 <div class="options">
-                    <label class="option"><input type="radio" name="q1" value="1"><img src="https://via.placeholder.com/48x48/4f46e5/ffffff?text=H" alt="Humano"> Humano</label>
-                    <label class="option"><input type="radio" name="q1" value="2"><img src="https://via.placeholder.com/48x48/1f2937/ffffff?text=UD" alt="No-muerto"> No-muerto</label>
-                    <label class="option"><input type="radio" name="q1" value="3"><img src="https://via.placeholder.com/48x48/4f46e5/ffffff?text=D" alt="Draenei"> Draenei</label>
-                    <label class="option"><input type="radio" name="q1" value="4"><img src="https://via.placeholder.com/48x48/e879f9/ffffff?text=BE" alt="Elfo de sangre"> Elfo de sangre</label>
-                    <label class="option"><input type="radio" name="q1" value="5"><img src="https://via.placeholder.com/48x48/1f2937/ffffff?text=V" alt="Vrykul"> Vrykul</label>
-                    <label class="option"><input type="radio" name="q1" value="6"><img src="https://via.placeholder.com/48x48/059669/ffffff?text=O" alt="Orco"> Orco</label>
-                    <label class="option"><input type="radio" name="q1" value="7"><img src="https://via.placeholder.com/48x48/4f46e5/ffffff?text=NE" alt="Elfo de la noche"> Elfo de la noche</label>
-                    <label class="option"><input type="radio" name="q1" value="8"><img src="https://via.placeholder.com/48x48/1f2937/ffffff?text=VK" alt="Val'kyr"> Val'kyr</label>
-                    <label class="option"><input type="radio" name="q1" value="9"><img src="https://via.placeholder.com/48x48/059669/ffffff?text=T" alt="Tauren"> Tauren</label>
+                    <label class="option"><input type="radio" name="q1" value="0"><img src="https://via.placeholder.com/48x48/4f46e5/ffffff?text=H" alt="Humano"> Humano</label>
+                    <label class="option"><input type="radio" name="q1" value="1"><img src="https://via.placeholder.com/48x48/1f2937/ffffff?text=UD" alt="No-muerto"> No-muerto</label>
+                    <label class="option"><input type="radio" name="q1" value="2"><img src="https://via.placeholder.com/48x48/4f46e5/ffffff?text=D" alt="Draenei"> Draenei</label>
+                    <label class="option"><input type="radio" name="q1" value="3"><img src="https://via.placeholder.com/48x48/e879f9/ffffff?text=BE" alt="Elfo de sangre"> Elfo de sangre</label>
+                    <label class="option"><input type="radio" name="q1" value="4"><img src="https://via.placeholder.com/48x48/1f2937/ffffff?text=V" alt="Vrykul"> Vrykul</label>
+                    <label class="option"><input type="radio" name="q1" value="5"><img src="https://via.placeholder.com/48x48/059669/ffffff?text=O" alt="Orco"> Orco</label>
+                    <label class="option"><input type="radio" name="q1" value="6"><img src="https://via.placeholder.com/48x48/4f46e5/ffffff?text=NE" alt="Elfo de la noche"> Elfo de la noche</label>
+                    <label class="option"><input type="radio" name="q1" value="7"><img src="https://via.placeholder.com/48x48/1f2937/ffffff?text=VK" alt="Val'kyr"> Val'kyr</label>
+                    <label class="option"><input type="radio" name="q1" value="8"><img src="https://via.placeholder.com/48x48/059669/ffffff?text=T" alt="Tauren"> Tauren</label>
                 </div>
             </div>
 
@@ -262,12 +273,12 @@
             <div class="question" data-question="2">
                 <h2>2. ¿Qué clase prefieres?</h2>
                 <div class="options">
-                    <label class="option"><input type="radio" name="q2" value="1">🛡️ Paladín: Luchadores de armadura pesada</label>
-                    <label class="option"><input type="radio" name="q2" value="2">🌪️ Chamán: Poder de los elementos</label>
-                    <label class="option"><input type="radio" name="q2" value="3">☠️ Caballero de la Muerte: Magia oscura</label>
-                    <label class="option"><input type="radio" name="q2" value="4">🔥 Brujo: Magia de fuego y sombras</label>
-                    <label class="option"><input type="radio" name="q2" value="5">🌿 Druida: Cambian de forma</label>
-                    <label class="option"><input type="radio" name="q2" value="6">⚔️ Guerrero: Combate armado</label>
+                    <label class="option"><input type="radio" name="q2" value="0">🛡️ Paladín: Luchadores de armadura pesada</label>
+                    <label class="option"><input type="radio" name="q2" value="1">🌪️ Chamán: Poder de los elementos</label>
+                    <label class="option"><input type="radio" name="q2" value="2">☠️ Caballero de la Muerte: Magia oscura</label>
+                    <label class="option"><input type="radio" name="q2" value="3">🔥 Brujo: Magia de fuego y sombras</label>
+                    <label class="option"><input type="radio" name="q2" value="4">🌿 Druida: Cambian de forma</label>
+                    <label class="option"><input type="radio" name="q2" value="5">⚔️ Guerrero: Combate armado</label>
                 </div>
             </div>
 
@@ -357,14 +368,6 @@
                 <button type="button" class="btn" id="nextBtn">Siguiente</button>
             </div>
         </form>
-
-        <div class="result" id="result">
-            <h2 class="result-title" id="resultTitle">¡Tu código está listo!</h2>
-            <div class="code" id="resultCode">XXXXX XXXXX</div>
-            <p class="result-text">Copia este código y envíalo al grupo de entrega</p>
-            <button class="restart" onclick="restartQuiz()">🔄 Hacer test de nuevo</button>
-        </div>
-    </div>
 
     <script>
 const answers = {
