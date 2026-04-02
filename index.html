@@ -194,6 +194,27 @@
         .restart:hover {
             background: #7c3aed;
         }
+     .whatsapp-instruction {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+    font-weight: 600;
+    font-size: 1em;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+.whatsapp-instruction a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.whatsapp-instruction a:hover {
+    text-decoration: underline;
+}
 
         .nav-buttons {
             display: flex;
@@ -376,9 +397,15 @@
             <h2 class="result-title">¡Tu código de lealtad!</h2>
             <div class="code" id="resultCode">XXXXX XXXXX</div>
             <p class="result-text">
-                Comparte tu código: <a href="#" onclick="copyCode()">📋 Copiar código</a>
+            <a href="#" onclick="copyCode()">📋 Copiar código</a>
             </p>
             <button class="restart" onclick="restartQuiz()">🔄 Nuevo test</button>
+         <div class="whatsapp-instruction">
+    📱 <strong>Copia el código y envíalo en el grupo de entrega:</strong><br>
+    <a href="https://chat.whatsapp.com/Bb5pbYUVDJf5v4LztXmIyj?mode=gi_t" target="_blank">
+        https://chat.whatsapp.com/Bb5pbYUVDJf5v4LztXmIyj?mode=gi_t
+    </a>
+</div>
         </div>
     </div>
 
