@@ -355,50 +355,132 @@
         </div>
     </div>
 
-    <script>
-        const answers = {
-            1: {a:'X', b:'Z', c:'X', d:'Y', e:'Z', f:'Y', g:'X', h:'Z', i:'Y'},
-            2: {a:'X', b:'Y', c:'Z', d:'Z', e:'X', f:'Y'},
-            3: {a:'X', b:'Z', c:'Y'},
-            4: {a:'Z', b:'Y', c:'X'},
-            5: {a:'Y', b:'Z', c:'X'},
-            6: {a:'Y', b:'X', c:'Z'},
-            7: {a:'Y', b:'Z', c:'X'},
-            8: {a:'X', b:'Y', c:'Z'},
-            9: {a:'Z', b:'X', c:'Y'},
-            10: {a:'X', b:'Y', c:'Z'}
-        };
+   <script>
+const answers = {
+    1: {a:'X', b:'Z', c:'X', d:'Y', e:'Z', f:'Y', g:'X', h:'Z', i:'Y'},
+    2: {a:'X', b:'Y', c:'Z', d:'Z', e:'X', f:'Y'},
+    3: {a:'X', b:'Z', c:'Y'},
+    4: {a:'Z', b:'Y', c:'X'},
+    5: {a:'Y', b:'Z', c:'X'},
+    6: {a:'Y', b:'X', c:'Z'},
+    7: {a:'Y', b:'Z', c:'X'},
+    8: {a:'X', b:'Y', c:'Z'},
+    9: {a:'Z', b:'X', c:'Y'},
+    10: {a:'X', b:'Y', c:'Z'}
+};
 
-        let currentQuestion = 1;
-        let userAnswers = [];
+let currentQuestion = 1;
+let userAnswers = [];
 
-        const quizForm = document.getElementById('quizForm');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const progressBar = document.getElementById('progressBar');
-        const result = document.getElementById('result');
+const quizForm = document.getElementById('quizForm');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const progressBar = document.getElementById('progressBar');
+const result = document.getElementById('result');
 
-        // Inicializar
-        updateProgress();
+// Inicializar
+updateProgress();
+updateButtons();
+
+// Event listeners
+quizForm.addEventListener('change', handleOptionSelect);
+prevBtn.addEventListener('click', prevQuestion);
+nextBtn.addEventListener('click', nextQuestion);
+
+function handleOptionSelect(e) {
+    const option = e.target.closest('.option');
+    if (!option) return;
+
+    // Remover selección previa en la pregunta actual
+    const currentQ = document.querySelector(`[data-question="${currentQuestion}"] .options`);
+    currentQ.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+
+    // Seleccionar nueva opción
+    option.classList.add('selected');
+    saveAnswer();
+}
+
+function saveAnswer() {
+    const selectedOption = document.querySelector(`[data-question="${currentQuestion}"] .option.selected`);
+    if (selectedOption) {
+        const options = document.querySelector(`[data-question="${currentQuestion}"] .options`).querySelectorAll('.option');
+        const index = Array.from(options).indexOf(selectedOption);
+        userAnswers[currentQuestion - 1] = index;
         updateButtons();
+    }
+}
 
-        // Event listeners
-        quizForm.addEventListener('change', handleOptionSelect);
-        prevBtn.addEventListener('click', prevQuestion);
-        nextBtn.addEventListener('click', nextQuestion);
+function updateProgress() {
+    const progress = (currentQuestion / 10) * 100;
+    progressBar.style.width = progress + '%';
+}
 
-        function handleOptionSelect(e) {
-            const option = e.target.closest('.option');
-            if (!option) return;
+function updateButtons() {
+    prevBtn.disabled = currentQuestion === 1;
+    nextBtn.textContent = currentQuestion === 10 ? 'Finalizar' : 'Siguiente';
+    nextBtn.disabled = !userAnswers[currentQuestion - 1];
+}
 
-            // Remover selección previa en la pregunta actual
-            const currentQ = document.querySelector(`[data-question="${currentQuestion}"] .options`);
-            currentQ.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+function showQuestion(questionNum) {
+    document.querySelectorAll('.question').forEach(q => {
+        q.style.display = 'none';
+    });
+    document.querySelector(`[data-question="${questionNum}"]`).style.display = 'block';
+    
+    // Restaurar selección previa si existe
+    if (userAnswers[questionNum - 1] !== undefined) {
+        const options = document.querySelector(`[data-question="${questionNum}"] .options .option`);
+        const selectedIndex = userAnswers[questionNum - 1];
+        options[selectedIndex].classList.add('selected');
+    }
+    
+    currentQuestion = questionNum;
+    updateProgress();
+    updateButtons();
+}
 
-            // Seleccionar nueva opción
-            option.classList.add('selected');
-            saveAnswer();
-        }
+function nextQuestion() {
+    if (currentQuestion < 10) {
+        showQuestion(currentQuestion + 1);
+    } else {
+        showResults();
+    }
+}
 
-        function saveAnswer() {
-            const selectedOption = document.querySelector(`[data-question="${currentQuestion}"]
+function prevQuestion() {
+    if (currentQuestion > 1) {
+        showQuestion(currentQuestion - 1);
+    }
+}
+
+function showResults() {
+    // Ocultar formulario y mostrar resultado
+    quizForm.style.display = 'none';
+    result.classList.add('show');
+    
+    // Calcular código final
+    let code = '';
+    for (let i = 0; i < 10; i++) {
+        const answerIndex = userAnswers[i];
+        const questionAnswers = Object.values(answers[i + 1]);
+        code += questionAnswers[answerIndex] || 'X';
+    }
+    
+    document.getElementById('resultCode').textContent = code;
+}
+
+function restartQuiz() {
+    currentQuestion = 1;
+    userAnswers = [];
+    quizForm.style.display = 'block';
+    result.classList.remove('show');
+    document.querySelectorAll('.question').forEach(q => q.style.display = 'none');
+    document.querySelector('[data-question="1"]').style.display = 'block';
+    document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+    updateProgress();
+    updateButtons();
+}
+
+// Mostrar primera pregunta
+showQuestion(1);
+</script>
