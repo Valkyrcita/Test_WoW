@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
+ <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test de Lealtad - World of Warcraft</title>
     <style>
@@ -351,6 +351,7 @@
                 </div>
             </div>
 
+
             <div class="nav-buttons">
                 <button type="button" class="btn" id="prevBtn" disabled>Anterior</button>
                 <button type="button" class="btn" id="nextBtn">Siguiente</button>
@@ -359,9 +360,13 @@
 
         <div class="result" id="result">
             <h2 class="result-title" id="resultTitle">¡Tu código está listo!</h2>
-            <div class="code"
+            <div class="code" id="resultCode">XXXXX XXXXX</div>
+            <p class="result-text">Copia este código para unirte a tu facción</p>
+            <button class="restart" onclick="restartQuiz()">🔄 Hacer test de nuevo</button>
+        </div>
+    </div>
 
-   <script>
+    <script>
 const answers = {
     1: {a:'X', b:'Z', c:'X', d:'Y', e:'Z', f:'Y', g:'X', h:'Z', i:'Y'},
     2: {a:'X', b:'Y', c:'Z', d:'Z', e:'X', f:'Y'},
@@ -388,29 +393,45 @@ const result = document.getElementById('result');
 updateProgress();
 updateButtons();
 
-// Event listeners
+// ✅ Event listeners CORREGIDOS
 quizForm.addEventListener('change', handleOptionSelect);
+quizForm.addEventListener('click', handleOptionClick); // Nuevo: para clicks en labels
 prevBtn.addEventListener('click', prevQuestion);
 nextBtn.addEventListener('click', nextQuestion);
 
-function handleOptionSelect(e) {
+function handleOptionClick(e) {
     const option = e.target.closest('.option');
-    if (!option) return;
+    if (!option || option.querySelector('input:checked')) return;
 
-    // Remover selección previa en la pregunta actual
+    // Marcar el input correspondiente
+    const input = option.querySelector('input');
+    if (input) {
+        input.checked = true;
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+}
+
+function handleOptionSelect(e) {
+    const input = e.target;
+    if (input.type !== 'radio') return;
+
+    // Remover selección visual previa
     const currentQ = document.querySelector(`[data-question="${currentQuestion}"] .options`);
     currentQ.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
 
     // Seleccionar nueva opción
-    option.classList.add('selected');
-    saveAnswer();
+    const selectedOption = currentQ.querySelector(`input[name="${input.name}"]:checked`)?.closest('.option');
+    if (selectedOption) {
+        selectedOption.classList.add('selected');
+        saveAnswer();
+    }
 }
 
 function saveAnswer() {
-    const selectedOption = document.querySelector(`[data-question="${currentQuestion}"] .option.selected`);
-    if (selectedOption) {
+    const selectedInput = document.querySelector(`[data-question="${currentQuestion}"] input:checked`);
+    if (selectedInput) {
         const options = document.querySelector(`[data-question="${currentQuestion}"] .options`).querySelectorAll('.option');
-        const index = Array.from(options).indexOf(selectedOption);
+        const index = Array.from(options).findIndex(opt => opt.querySelector('input') === selectedInput);
         userAnswers[currentQuestion - 1] = index;
         updateButtons();
     }
@@ -428,16 +449,24 @@ function updateButtons() {
 }
 
 function showQuestion(questionNum) {
+    // Ocultar todas las preguntas
     document.querySelectorAll('.question').forEach(q => {
-        q.style.display = 'none';
+        q.classList.remove('active');
     });
-    document.querySelector(`[data-question="${questionNum}"]`).style.display = 'block';
     
-    // Restaurar selección previa si existe
+    // Mostrar pregunta actual
+    const currentQ = document.querySelector(`[data-question="${questionNum}"]`);
+    currentQ.classList.add('active');
+    
+    // ✅ CORREGIDO: Restaurar selección previa
     if (userAnswers[questionNum - 1] !== undefined) {
-        const options = document.querySelector(`[data-question="${questionNum}"] .options .option`);
+        const options = currentQ.querySelectorAll('.option');
         const selectedIndex = userAnswers[questionNum - 1];
-        options[selectedIndex].classList.add('selected');
+        if (options[selectedIndex]) {
+            const input = options[selectedIndex].querySelector('input');
+            input.checked = true;
+            options[selectedIndex].classList.add('selected');
+        }
     }
     
     currentQuestion = questionNum;
@@ -464,12 +493,13 @@ function showResults() {
     quizForm.style.display = 'none';
     result.classList.add('show');
     
-    // Calcular código final
+    // ✅ CORREGIDO: Calcular código final
     let code = '';
     for (let i = 0; i < 10; i++) {
         const answerIndex = userAnswers[i];
         const questionAnswers = Object.values(answers[i + 1]);
         code += questionAnswers[answerIndex] || 'X';
+        if (i === 4) code += ' '; // Espacio cada 5 caracteres
     }
     
     document.getElementById('resultCode').textContent = code;
@@ -480,13 +510,18 @@ function restartQuiz() {
     userAnswers = [];
     quizForm.style.display = 'block';
     result.classList.remove('show');
-    document.querySelectorAll('.question').forEach(q => q.style.display = 'none');
-    document.querySelector('[data-question="1"]').style.display = 'block';
-    document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+    document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+    document.querySelector('[data-question="1"]').classList.add('active');
+    document.querySelectorAll('.option').forEach(opt => {
+        opt.classList.remove('selected');
+        opt.querySelector('input').checked = false;
+    });
     updateProgress();
     updateButtons();
 }
 
 // Mostrar primera pregunta
 showQuestion(1);
-</script>
+    </script>
+</body>
+</html>
