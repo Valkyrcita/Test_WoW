@@ -4,8 +4,9 @@
  <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test de Lealtad - World of Warcraft</title>
+    <!-- Tu CSS permanece igual -->
     <style>
-        * {
+         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -240,6 +241,8 @@
                 padding: 14px 16px;
             }
         }
+        * 
+        /* Mantén todo tu CSS original aquí */
     </style>
 </head>
 <body>
@@ -253,6 +256,7 @@
         </div>
 
         <form id="quizForm">
+            <!-- Todas tus preguntas permanecen IGUALES -->
             <!-- Pregunta 1 -->
             <div class="question active" data-question="1">
                 <h2>1. ¿Cuál raza escogerías para jugar?</h2>
@@ -268,8 +272,7 @@
                     <label class="option"><input type="radio" name="q1" value="8"><img src="https://via.placeholder.com/48x48/059669/ffffff?text=T" alt="Tauren"> Tauren</label>
                 </div>
             </div>
-
-            <!-- Pregunta 2 -->
+             <!-- Pregunta 2 -->
             <div class="question" data-question="2">
                 <h2>2. ¿Qué clase prefieres?</h2>
                 <div class="options">
@@ -361,170 +364,188 @@
                     <label class="option"><input type="radio" name="q10" value="2"><img src="https://via.placeholder.com/48x48/1f2937/fff?text=S" alt="Sindragosa"> Sindragosa</label>
                 </div>
             </div>
-
-
+            
             <div class="nav-buttons">
                 <button type="button" class="btn" id="prevBtn" disabled>Anterior</button>
                 <button type="button" class="btn" id="nextBtn">Siguiente</button>
             </div>
         </form>
 
+        <!-- ✅ AGREGADO: Elemento de resultado que faltaba -->
+        <div id="result" class="result">
+            <h2 class="result-title">¡Tu código de lealtad!</h2>
+            <div class="code" id="resultCode">XXXXX XXXXX</div>
+            <p class="result-text">
+                Comparte tu código: <a href="#" onclick="copyCode()">📋 Copiar código</a>
+            </p>
+            <button class="restart" onclick="restartQuiz()">🔄 Nuevo test</button>
+        </div>
+    </div>
+
     <script>
-const answers = {
-    1: {a:'X', b:'Z', c:'X', d:'Y', e:'Z', f:'Y', g:'X', h:'Z', i:'Y'},
-    2: {a:'X', b:'Y', c:'Z', d:'Z', e:'X', f:'Y'},
-    3: {a:'X', b:'Z', c:'Y'},
-    4: {a:'Z', b:'Y', c:'X'},
-    5: {a:'Y', b:'Z', c:'X'},
-    6: {a:'Y', b:'X', c:'Z'},
-    7: {a:'Y', b:'Z', c:'X'},
-    8: {a:'X', b:'Y', c:'Z'},
-    9: {a:'Z', b:'X', c:'Y'},
-    10: {a:'X', b:'Y', c:'Z'}
-};
+        // Tu configuración de respuestas (perfecta)
+        const answers = {
+            1: {0:'X', 1:'Z', 2:'X', 3:'Y', 4:'Z', 5:'Y', 6:'X', 7:'Z', 8:'Y'},
+            2: {0:'X', 1:'Y', 2:'Z', 3:'Z', 4:'X', 5:'Y'},
+            3: {0:'X', 1:'Z', 2:'Y'},
+            4: {0:'Z', 1:'Y', 2:'X'},
+            5: {0:'Y', 1:'Z', 2:'X'},
+            6: {0:'Y', 1:'X', 2:'Z'},
+            7: {0:'Y', 1:'Z', 2:'X'},
+            8: {0:'X', 1:'Y', 2:'Z'},
+            9: {0:'Z', 1:'X', 2:'Y'},
+            10: {0:'X', 1:'Y', 2:'Z'}
+        };
 
-let currentQuestion = 1;
-let userAnswers = [];
+        let currentQuestion = 1;
+        let userAnswers = new Array(10).fill(-1); // ✅ Inicializar correctamente
 
-const quizForm = document.getElementById('quizForm');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const progressBar = document.getElementById('progressBar');
-const result = document.getElementById('result');
+        const quizForm = document.getElementById('quizForm');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const progressBar = document.getElementById('progressBar');
+        const result = document.getElementById('result');
 
-// Inicializar
-updateProgress();
-updateButtons();
+        // ✅ Event listeners CORREGIDOS
+        quizForm.addEventListener('change', handleOptionSelect);
+        quizForm.addEventListener('click', handleLabelClick);
+        prevBtn.addEventListener('click', prevQuestion);
+        nextBtn.addEventListener('click', nextQuestion);
 
-// ✅ Event listeners CORREGIDOS
-quizForm.addEventListener('change', handleOptionSelect);
-quizForm.addEventListener('click', handleOptionClick); // Nuevo: para clicks en labels
-prevBtn.addEventListener('click', prevQuestion);
-nextBtn.addEventListener('click', nextQuestion);
-
-function handleOptionClick(e) {
-    const option = e.target.closest('.option');
-    if (!option || option.querySelector('input:checked')) return;
-
-    // Marcar el input correspondiente
-    const input = option.querySelector('input');
-    if (input) {
-        input.checked = true;
-        input.dispatchEvent(new Event('change', { bubbles: true }));
-    }
-}
-
-function handleOptionSelect(e) {
-    const input = e.target;
-    if (input.type !== 'radio') return;
-
-    // Remover selección visual previa
-    const currentQ = document.querySelector(`[data-question="${currentQuestion}"] .options`);
-    currentQ.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-
-    // Seleccionar nueva opción
-    const selectedOption = currentQ.querySelector(`input[name="${input.name}"]:checked`)?.closest('.option');
-    if (selectedOption) {
-        selectedOption.classList.add('selected');
-        saveAnswer();
-    }
-}
-
-function saveAnswer() {
-    const selectedInput = document.querySelector(`[data-question="${currentQuestion}"] input:checked`);
-    if (selectedInput) {
-        const options = document.querySelector(`[data-question="${currentQuestion}"] .options`).querySelectorAll('.option');
-        const index = Array.from(options).findIndex(opt => opt.querySelector('input') === selectedInput);
-        userAnswers[currentQuestion - 1] = index;
-        updateButtons();
-    }
-}
-
-function updateProgress() {
-    const progress = (currentQuestion / 10) * 100;
-    progressBar.style.width = progress + '%';
-}
-
-function updateButtons() {
-    prevBtn.disabled = currentQuestion === 1;
-    nextBtn.textContent = currentQuestion === 10 ? 'Finalizar' : 'Siguiente';
-    nextBtn.disabled = !userAnswers[currentQuestion - 1];
-}
-
-function showQuestion(questionNum) {
-    // Ocultar todas las preguntas
-    document.querySelectorAll('.question').forEach(q => {
-        q.classList.remove('active');
-    });
-    
-    // Mostrar pregunta actual
-    const currentQ = document.querySelector(`[data-question="${questionNum}"]`);
-    currentQ.classList.add('active');
-    
-    // ✅ CORREGIDO: Restaurar selección previa
-    if (userAnswers[questionNum - 1] !== undefined) {
-        const options = currentQ.querySelectorAll('.option');
-        const selectedIndex = userAnswers[questionNum - 1];
-        if (options[selectedIndex]) {
-            const input = options[selectedIndex].querySelector('input');
-            input.checked = true;
-            options[selectedIndex].classList.add('selected');
+        function handleLabelClick(e) {
+            const option = e.target.closest('.option');
+            if (!option) return;
+            
+            const input = option.querySelector('input[type="radio"]');
+            if (input && !input.checked) {
+                input.checked = true;
+                input.dispatchEvent(new Event('change', { bubbles: true }));
+            }
         }
-    }
-    
-    currentQuestion = questionNum;
-    updateProgress();
-    updateButtons();
-}
 
-function nextQuestion() {
-    if (currentQuestion < 10) {
-        showQuestion(currentQuestion + 1);
-    } else {
-        showResults();
-    }
-}
+        function handleOptionSelect(e) {
+            const input = e.target;
+            if (input.type !== 'radio') return;
 
-function prevQuestion() {
-    if (currentQuestion > 1) {
-        showQuestion(currentQuestion - 1);
-    }
-}
+            // Limpiar selecciones previas de la pregunta actual
+            const currentOptions = document.querySelectorAll(`[data-question="${currentQuestion}"] .option`);
+            currentOptions.forEach(opt => opt.classList.remove('selected'));
 
-function showResults() {
-    // Ocultar formulario y mostrar resultado
-    quizForm.style.display = 'none';
-    result.classList.add('show');
-    
-    // ✅ CORREGIDO: Calcular código final
-    let code = '';
-    for (let i = 0; i < 10; i++) {
-        const answerIndex = userAnswers[i];
-        const questionAnswers = Object.values(answers[i + 1]);
-        code += questionAnswers[answerIndex] || 'X';
-        if (i === 4) code += ' '; // Espacio cada 5 caracteres
-    }
-    
-    document.getElementById('resultCode').textContent = code;
-}
+            // Marcar la nueva selección
+            const selectedOption = input.closest('.option');
+            if (selectedOption) {
+                selectedOption.classList.add('selected');
+                saveAnswer();
+            }
+        }
 
-function restartQuiz() {
-    currentQuestion = 1;
-    userAnswers = [];
-    quizForm.style.display = 'block';
-    result.classList.remove('show');
-    document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
-    document.querySelector('[data-question="1"]').classList.add('active');
-    document.querySelectorAll('.option').forEach(opt => {
-        opt.classList.remove('selected');
-        opt.querySelector('input').checked = false;
-    });
-    updateProgress();
-    updateButtons();
-}
+        function saveAnswer() {
+            const selectedInput = document.querySelector(`[data-question="${currentQuestion}"] input:checked`);
+            if (selectedInput) {
+                const options = document.querySelectorAll(`[data-question="${currentQuestion}"] .option`);
+                const index = Array.from(options).findIndex(opt => opt.querySelector('input') === selectedInput);
+                userAnswers[currentQuestion - 1] = index;
+                updateButtons();
+            }
+        }
 
-// Mostrar primera pregunta
-showQuestion(1);
+        function updateProgress() {
+            const progress = (currentQuestion / 10) * 100;
+            progressBar.style.width = progress + '%';
+        }
+
+        function updateButtons() {
+            prevBtn.disabled = currentQuestion === 1;
+            const hasAnswer = userAnswers[currentQuestion - 1] !== -1;
+            nextBtn.disabled = !hasAnswer;
+            nextBtn.textContent = currentQuestion === 10 ? 'Finalizar' : 'Siguiente';
+        }
+
+        function showQuestion(questionNum) {
+            // Ocultar todas las preguntas
+            document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+            
+            // Mostrar pregunta actual
+            const currentQ = document.querySelector(`[data-question="${questionNum}"]`);
+            currentQ.classList.add('active');
+            
+            // ✅ CORREGIDO: Restaurar selección previa
+            if (userAnswers[questionNum - 1] !== -1) { // ✅ Error de sintaxis corregido
+                const options = currentQ.querySelectorAll('.option');
+                const selectedIndex = userAnswers[questionNum - 1];
+                if (options[selectedIndex]) {
+                    const input = options[selectedIndex].querySelector('input');
+                    input.checked = true;
+                    options[selectedIndex].classList.add('selected');
+                }
+            }
+            
+            currentQuestion = questionNum;
+            updateProgress();
+            updateButtons();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < 10) {
+                showQuestion(currentQuestion + 1);
+            } else {
+                showResults();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 1) {
+                showQuestion(currentQuestion - 1);
+            }
+        }
+
+        function showResults() {
+            quizForm.style.display = 'none';
+            result.classList.add('show');
+            
+            // Calcular código final
+            let code = '';
+            for (let i = 0; i < 10; i++) {
+                const answerIndex = userAnswers[i];
+                if (answerIndex !== -1) {
+                    code += answers[i + 1][answerIndex];
+                } else {
+                    code += 'X';
+                }
+                if (i === 4) code += ' ';
+            }
+            
+            document.getElementById('resultCode').textContent = code.trim();
+        }
+
+        function restartQuiz() {
+            currentQuestion = 1;
+            userAnswers = new Array(10).fill(-1);
+            quizForm.style.display = 'block';
+            result.classList.remove('show');
+            
+            document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+            document.querySelector('[data-question="1"]').classList.add('active');
+            
+            // Limpiar todas las selecciones
+            document.querySelectorAll('input[type="radio"]').forEach(input => {
+                input.checked = false;
+            });
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            
+            updateProgress();
+            updateButtons();
+        }
+
+        function copyCode() {
+            const code = document.getElementById('resultCode').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('¡Código copiado!');
+            });
+        }
+
+        // Inicializar
+        showQuestion(1);
     </script>
 </body>
 </html>
