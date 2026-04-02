@@ -65,6 +65,11 @@
         .question {
             padding: 30px 25px;
             border-bottom: 1px solid #f1f5f9;
+            display: none;
+        }
+
+        .question.active {
+            display: block;
         }
 
         .question:last-child {
@@ -106,6 +111,10 @@
             background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
             color: white;
             border-color: #7c3aed;
+        }
+
+        .option input {
+            display: none;
         }
 
         .option img {
@@ -178,6 +187,7 @@
             display: flex;
             gap: 12px;
             margin-top: 25px;
+            padding: 0 25px 25px;
         }
 
         .btn {
@@ -233,18 +243,18 @@
 
         <form id="quizForm">
             <!-- Pregunta 1 -->
-            <div class="question" data-question="1">
+            <div class="question active" data-question="1">
                 <h2>1. ¿Cuál raza escogerías para jugar?</h2>
                 <div class="options">
-                    <label class="option"><img src="https://via.placeholder.com/48x48/4f46e5/ffffff?text=H" alt="Humano"> Humano</label>
-                    <label class="option"><img src="https://via.placeholder.com/48x48/1f2937/ffffff?text=UD" alt="No-muerto"> No-muerto</label>
-                    <label class="option"><img src="https://via.placeholder.com/48x48/4f46e5/ffffff?text=D" alt="Draenei"> Draenei</label>
-                    <label class="option"><img src="https://via.placeholder.com/48x48/e879f9/ffffff?text=BE" alt="Elfo de sangre"> Elfo de sangre</label>
-                    <label class="option"><img src="https://via.placeholder.com/48x48/1f2937/ffffff?text=V" alt="Vrykul"> Vrykul</label>
-                    <label class="option"><img src="https://via.placeholder.com/48x48/059669/ffffff?text=O" alt="Orco"> Orco</label>
-                    <label class="option"><img src="https://via.placeholder.com/48x48/4f46e5/ffffff?text=NE" alt="Elfo de la noche"> Elfo de la noche</label>
-                    <label class="option"><img src="https://via.placeholder.com/48x48/1f2937/ffffff?text=VK" alt="Val'kyr"> Val'kyr</label>
-                    <label class="option"><img src="https://via.placeholder.com/48x48/059669/ffffff?text=T" alt="Tauren"> Tauren</label>
+                    <label class="option"><input type="radio" name="q1" value="0"><img src="https://via.placeholder.com/48x48/4f46e5/ffffff?text=H" alt="Humano"> Humano</label>
+                    <label class="option"><input type="radio" name="q1" value="1"><img src="https://via.placeholder.com/48x48/1f2937/ffffff?text=UD" alt="No-muerto"> No-muerto</label>
+                    <label class="option"><input type="radio" name="q1" value="2"><img src="https://via.placeholder.com/48x48/4f46e5/ffffff?text=D" alt="Draenei"> Draenei</label>
+                    <label class="option"><input type="radio" name="q1" value="3"><img src="https://via.placeholder.com/48x48/e879f9/ffffff?text=BE" alt="Elfo de sangre"> Elfo de sangre</label>
+                    <label class="option"><input type="radio" name="q1" value="4"><img src="https://via.placeholder.com/48x48/1f2937/ffffff?text=V" alt="Vrykul"> Vrykul</label>
+                    <label class="option"><input type="radio" name="q1" value="5"><img src="https://via.placeholder.com/48x48/059669/ffffff?text=O" alt="Orco"> Orco</label>
+                    <label class="option"><input type="radio" name="q1" value="6"><img src="https://via.placeholder.com/48x48/4f46e5/ffffff?text=NE" alt="Elfo de la noche"> Elfo de la noche</label>
+                    <label class="option"><input type="radio" name="q1" value="7"><img src="https://via.placeholder.com/48x48/1f2937/ffffff?text=VK" alt="Val'kyr"> Val'kyr</label>
+                    <label class="option"><input type="radio" name="q1" value="8"><img src="https://via.placeholder.com/48x48/059669/ffffff?text=T" alt="Tauren"> Tauren</label>
                 </div>
             </div>
 
@@ -252,12 +262,12 @@
             <div class="question" data-question="2">
                 <h2>2. ¿Qué clase prefieres?</h2>
                 <div class="options">
-                    <label class="option">🛡️ Paladín: Luchadores de armadura pesada</label>
-                    <label class="option">🌪️ Chamán: Poder de los elementos</label>
-                    <label class="option">☠️ Caballero de la Muerte: Magia oscura</label>
-                    <label class="option">🔥 Brujo: Magia de fuego y sombras</label>
-                    <label class="option">🌿 Druida: Cambian de forma</label>
-                    <label class="option">⚔️ Guerrero: Combate armado</label>
+                    <label class="option"><input type="radio" name="q2" value="0">🛡️ Paladín: Luchadores de armadura pesada</label>
+                    <label class="option"><input type="radio" name="q2" value="1">🌪️ Chamán: Poder de los elementos</label>
+                    <label class="option"><input type="radio" name="q2" value="2">☠️ Caballero de la Muerte: Magia oscura</label>
+                    <label class="option"><input type="radio" name="q2" value="3">🔥 Brujo: Magia de fuego y sombras</label>
+                    <label class="option"><input type="radio" name="q2" value="4">🌿 Druida: Cambian de forma</label>
+                    <label class="option"><input type="radio" name="q2" value="5">⚔️ Guerrero: Combate armado</label>
                 </div>
             </div>
 
@@ -265,9 +275,9 @@
             <div class="question" data-question="3">
                 <h2>3. ¿Tu montura terrestre?</h2>
                 <div class="options">
-                    <label class="option"><img src="https://via.placeholder.com/48x48/f59e0b/000?text=T" alt="Tigre"> Tigre</label>
-                    <label class="option"><img src="https://via.placeholder.com/48x48/1f2937/ffffff?text=D" alt="Destrero"> Destrero</label>
-                    <label class="option"><img src="https://via.placeholder.com/48x48/059669/ffffff?text=L" alt="Lobo"> Lobo</label>
+                    <label class="option"><input type="radio" name="q3" value="0"><img src="https://via.placeholder.com/48x48/f59e0b/000?text=T" alt="Tigre"> Tigre</label>
+                    <label class="option"><input type="radio" name="q3" value="1"><img src="https://via.placeholder.com/48x48/1f2937/ffffff?text=D" alt="Destrero"> Destrero</label>
+                    <label class="option"><input type="radio" name="q3" value="2"><img src="https://via.placeholder.com/48x48/059669/ffffff?text=L" alt="Lobo"> Lobo</label>
                 </div>
             </div>
 
@@ -275,9 +285,9 @@
             <div class="question" data-question="4">
                 <h2>4. ¿Tu montura aérea?</h2>
                 <div class="options">
-                    <label class="option"><img src="https://via.placeholder.com/48x48/1f2937/ffffff?text=CQ" alt="Chillón quiebrevil"> Chillón quiebrevil</label>
-                    <label class="option"><img src="https://via.placeholder.com/48x48/e879f9/000?text=DL" alt="Dracoleón"> Dracoleón</label>
-                    <label class="option"><img src="https://via.placeholder.com/48x48/4f46e5/ffffff?text=G" alt="Grifo nevado"> Grifo nevado</label>
+                    <label class="option"><input type="radio" name="q4" value="0"><img src="https://via.placeholder.com/48x48/1f2937/ffffff?text=CQ" alt="Chillón quiebrevil"> Chillón quiebrevil</label>
+                    <label class="option"><input type="radio" name="q4" value="1"><img src="https://via.placeholder.com/48x48/e879f9/000?text=DL" alt="Dracoleón"> Dracoleón</label>
+                    <label class="option"><input type="radio" name="q4" value="2"><img src="https://via.placeholder.com/48x48/4f46e5/ffffff?text=G" alt="Grifo nevado"> Grifo nevado</label>
                 </div>
             </div>
 
@@ -285,9 +295,9 @@
             <div class="question" data-question="5">
                 <h2>5. ¿Tu atuendo perfecto?</h2>
                 <div class="options">
-                    <label class="option" data-value="Y"><img src="https://via.placeholder.com/48x48/e879f9/000?text=1" alt="Opción 1"> Opción 1</label>
-                    <label class="option" data-value="Z"><img src="https://via.placeholder.com/48x48/1f2937/ffffff?text=2" alt="Opción 2"> Opción 2</label>
-                    <label class="option" data-value="X"><img src="https://via.placeholder.com/48x48/4f46e5/ffffff?text=3" alt="Opción 3"> Opción 3</label>
+                    <label class="option"><input type="radio" name="q5" value="0"><img src="https://via.placeholder.com/48x48/e879f9/000?text=1" alt="Opción 1"> Opción 1</label>
+                    <label class="option"><input type="radio" name="q5" value="1"><img src="https://via.placeholder.com/48x48/1f2937/ffffff?text=2" alt="Opción 2"> Opción 2</label>
+                    <label class="option"><input type="radio" name="q5" value="2"><img src="https://via.placeholder.com/48x48/4f46e5/ffffff?text=3" alt="Opción 3"> Opción 3</label>
                 </div>
             </div>
 
@@ -295,9 +305,9 @@
             <div class="question" data-question="6">
                 <h2>6. ¿Qué rol ocupas?</h2>
                 <div class="options">
-                    <label class="option" data-value="Y">🛡️ Tanque - Proteges a tus aliados</label>
-                    <label class="option" data-value="X" data-heal="true">💚 Heal - Sanas a tus aliados</label>
-                    <label class="option" data-value="Z">⚔️ DPS - Infliges daño</label>
+                    <label class="option"><input type="radio" name="q6" value="0">🛡️ Tanque - Proteges a tus aliados</label>
+                    <label class="option"><input type="radio" name="q6" value="1">💚 Heal - Sanas a tus aliados</label>
+                    <label class="option"><input type="radio" name="q6" value="2">⚔️ DPS - Infliges daño</label>
                 </div>
             </div>
 
@@ -305,9 +315,9 @@
             <div class="question landscape" data-question="7">
                 <h2>7. ¿Qué escenario te llama más?</h2>
                 <div class="options">
-                    <label class="option landscape" data-value="Y"><img src="https://via.placeholder.com/300x160/e879f9/000?text=Y" alt="Opción 1"> Opción 1</label>
-                    <label class="option landscape" data-value="Z"><img src="https://via.placeholder.com/300x160/1f2937/fff?text=Z" alt="Opción 2"> Opción 2</label>
-                    <label class="option landscape" data-value="X"><img src="https://via.placeholder.com/300x160/4f46e5/fff?text=X" alt="Opción 3"> Opción 3</label>
+                    <label class="option landscape"><input type="radio" name="q7" value="0"><img src="https://via.placeholder.com/300x160/e879f9/000?text=Y" alt="Opción 1"> Opción 1</label>
+                    <label class="option landscape"><input type="radio" name="q7" value="1"><img src="https://via.placeholder.com/300x160/1f2937/fff?text=Z" alt="Opción 2"> Opción 2</label>
+                    <label class="option landscape"><input type="radio" name="q7" value="2"><img src="https://via.placeholder.com/300x160/4f46e5/fff?text=X" alt="Opción 3"> Opción 3</label>
                 </div>
             </div>
 
@@ -315,9 +325,9 @@
             <div class="question" data-question="8">
                 <h2>8. ¿Tu mascota/compañero?</h2>
                 <div class="options">
-                    <label class="option"><img src="https://via.placeholder.com/48x48/4f46e5/fff?text=L" alt="Lechuza"> Lechuza</label>
-                    <label class="option"><img src="https://via.placeholder.com/48x48/059669/fff?text=L" alt="Lobo"> Lobo</label>
-                    <label class="option"><img src="https://via.placeholder.com/48x48/1f2937/fff?text=E" alt="Esbirro"> Esbirro</label>
+                    <label class="option"><input type="radio" name="q8" value="0"><img src="https://via.placeholder.com/48x48/4f46e5/fff?text=L" alt="Lechuza"> Lechuza</label>
+                    <label class="option"><input type="radio" name="q8" value="1"><img src="https://via.placeholder.com/48x48/059669/fff?text=L" alt="Lobo"> Lobo</label>
+                    <label class="option"><input type="radio" name="q8" value="2"><img src="https://via.placeholder.com/48x48/1f2937/fff?text=E" alt="Esbirro"> Esbirro</label>
                 </div>
             </div>
 
@@ -325,9 +335,9 @@
             <div class="question" data-question="9">
                 <h2>9. ¿Qué personaje famoso?</h2>
                 <div class="options">
-                    <label class="option"><img src="https://via.placeholder.com/48x48/1f2937/fff?text=A" alt="Arthas"> Arthas Menethil</label>
-                    <label class="option"><img src="https://via.placeholder.com/48x48/4f46e5/fff?text=J" alt="Jaina"> Jaina Proudmoore</label>
-                    <label class="option"><img src="https://via.placeholder.com/48x48/e879f9/000?text=S" alt="Sylvanas"> Sylvanas Windrunner</label>
+                    <label class="option"><input type="radio" name="q9" value="0"><img src="https://via.placeholder.com/48x48/1f2937/fff?text=A" alt="Arthas"> Arthas Menethil</label>
+                    <label class="option"><input type="radio" name="q9" value="1"><img src="https://via.placeholder.com/48x48/4f46e5/fff?text=J" alt="Jaina"> Jaina Proudmoore</label>
+                    <label class="option"><input type="radio" name="q9" value="2"><img src="https://via.placeholder.com/48x48/e879f9/000?text=S" alt="Sylvanas"> Sylvanas Windrunner</label>
                 </div>
             </div>
 
@@ -335,13 +345,13 @@
             <div class="question" data-question="10">
                 <h2>10. ¿Tu dragón favorito?</h2>
                 <div class="options">
-                    <label class="option"><img src="https://via.placeholder.com/48x48/ef4444/fff?text=A" alt="Alexstrasza"> Alexstrasza</label>
-                    <label class="option"><img src="https://via.placeholder.com/48x48/0ea5e9/fff?text=K" alt="Kalecgos"> Kalecgos</label>
-                    <label class="option"><img src="https://via.placeholder.com/48x48/1f2937/fff?text=S" alt="Sindragosa"> Sindragosa</label>
+                    <label class="option"><input type="radio" name="q10" value="0"><img src="https://via.placeholder.com/48x48/ef4444/fff?text=A" alt="Alexstrasza"> Alexstrasza</label>
+                    <label class="option"><input type="radio" name="q10" value="1"><img src="https://via.placeholder.com/48x48/0ea5e9/fff?text=K" alt="Kalecgos"> Kalecgos</label>
+                    <label class="option"><input type="radio" name="q10" value="2"><img src="https://via.placeholder.com/48x48/1f2937/fff?text=S" alt="Sindragosa"> Sindragosa</label>
                 </div>
             </div>
 
-            <div class="nav-buttons" style="padding: 0 25px 25px;">
+            <div class="nav-buttons">
                 <button type="button" class="btn" id="prevBtn" disabled>Anterior</button>
                 <button type="button" class="btn" id="nextBtn">Siguiente</button>
             </div>
@@ -349,11 +359,7 @@
 
         <div class="result" id="result">
             <h2 class="result-title" id="resultTitle">¡Tu código está listo!</h2>
-            <div class="code" id="resultCode">XXXXXXXXXX</div>
-            <p class="result-text" id="resultText">Copia tu código único de 10 letras que revela tu verdadera lealtad en Azeroth.</p>
-            <button type="button" class="restart" onclick="restartQuiz()">Hacer test de nuevo</button>
-        </div>
-    </div>
+            <div class="code"
 
    <script>
 const answers = {
