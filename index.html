@@ -1,0 +1,397 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Lealtad - World of Warcraft</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .question {
+            margin-bottom: 30px;
+        }
+
+        .question h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1rem;
+        }
+
+        .option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #ffd700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .option img {
+            width: 48px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .option.landscape img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+        }
+
+        .option-text {
+            flex: 1;
+        }
+
+        .progress {
+            background: rgba(255, 255, 255, 0.1);
+            height: 4px;
+            border-radius: 2px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #ffd700, #ffed4a);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .result {
+            text-align: center;
+            padding: 40px 20px;
+            display: none;
+        }
+
+        .result-code {
+            background: linear-gradient(135deg, #ffd700, #ffed4a);
+            color: #1a1a2e;
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            letter-spacing: 4px;
+            user-select: all;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+        }
+
+        .result-title {
+            font-size: 1.4rem;
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .btn-copy {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 15px;
+        }
+
+        .btn-copy:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .option {
+                padding: 14px;
+                font-size: 0.95rem;
+            }
+            
+            .option img {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛡️ Test de Lealtad 🛡️</h1>
+        <div class="intro">
+            En el vasto mundo de Azeroth, tres grandes fuerzas se alzan para marcar el destino de los héroes. La Alianza, unida por la justicia y el honor, busca preservar la tradición y la esperanza de sus pueblos. La Horda, forjada en la fuerza y el espíritu indomable, lucha por la supervivencia y la gloria de sus clanes. Y la Plaga, guiada por el poder del Rey Exánime, ofrece un camino distinto: la eternidad bajo su manto de hielo y sombra, donde la muerte no es un final, sino una nueva forma de poder.
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <form id="quizForm">
+            <!-- Pregunta 1 -->
+            <div class="question" data-question="1">
+                <h3>1. ¿Cuál raza de las siguientes escogerías para jugar?</h3>
+                <div class="options">
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/4a90e2/ffffff?text=H" alt="Humano">
+                        <span class="option-text">a) Humano</span>
+                    </label>
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/2ecc71/ffffff?text=UD" alt="No-muerto">
+                        <span class="option-text">b) No-muerto</span>
+                    </label>
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/4a90e2/ffffff?text=D" alt="Draenei">
+                        <span class="option-text">c) Draenei</span>
+                    </label>
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/ff6b6b/ffffff?text=BE" alt="Elfo de sangre">
+                        <span class="option-text">d) Elfo de sangre</span>
+                    </label>
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/2ecc71/ffffff?text=V" alt="Vrykul">
+                        <span class="option-text">e) Vrykul</span>
+                    </label>
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/ff6b6b/ffffff?text=O" alt="Orco">
+                        <span class="option-text">f) Orco</span>
+                    </label>
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/4a90e2/ffffff?text=NE" alt="Elfo de la noche">
+                        <span class="option-text">g) Elfo de la noche</span>
+                    </label>
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/2ecc71/ffffff?text=VK" alt="Val'kyr">
+                        <span class="option-text">h) Val'kyr</span>
+                    </label>
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/ff6b6b/ffffff?text=T" alt="Tauren">
+                        <span class="option-text">i) Tauren</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Pregunta 2 -->
+            <div class="question" data-question="2">
+                <h3>2. En un juego de rol la clase que elijas definirá toda tu experiencia, escoge con cuidado cuál prefieres:</h3>
+                <div class="options">
+                    <label class="option">
+                        <span class="option-text">a) Paladín 🛡️: Luchadores de armadura pesada, apelan a la magia Sagrada para sanar y combatir el mal.</span>
+                    </label>
+                    <label class="option">
+                        <span class="option-text">b) Chamán 🌪️: Emplean el poder de los elementos para mejorar su daño con armas o hechizos.</span>
+                    </label>
+                    <label class="option">
+                        <span class="option-text">c) Caballero de la Muerte ☠️: Estos héroes cuerpo a cuerpo destacan en el uso de enfermedades y magia oscura.</span>
+                    </label>
+                    <label class="option">
+                        <span class="option-text">d) Brujo 🔥: Lanzan magia de fuego o de las sombras para dañar, drenar o maldecir al enemigo.</span>
+                    </label>
+                    <label class="option">
+                        <span class="option-text">e) Druida 🌿: Cambian de forma y sienten afinidad por el reino animal y vegetal.</span>
+                    </label>
+                    <label class="option">
+                        <span class="option-text">f) Guerrero ⚔️: Visten placas y buscan la perfección en el combate armado.</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Pregunta 3 -->
+            <div class="question" data-question="3">
+                <h3>3. Esta vez escoge la criatura que te servirá de montura terrestre:</h3>
+                <div class="options">
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/4a90e2/ffffff?text=T" alt="Tigre">
+                        <span class="option-text">a) Tigre</span>
+                    </label>
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/2ecc71/ffffff?text=D" alt="Destrero">
+                        <span class="option-text">b) Destrero</span>
+                    </label>
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/ff6b6b/ffffff?text=L" alt="Lobo">
+                        <span class="option-text">c) Lobo</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Pregunta 4 -->
+            <div class="question" data-question="4">
+                <h3>4. No siempre vas a hacer tu camino por tierra, es hora de que escogas una criatura para convertirse en tu montura aérea:</h3>
+                <div class="options">
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/2ecc71/ffffff?text=CQ" alt="Chillón quiebrevil">
+                        <span class="option-text">a) Chillón quiebrevil</span>
+                    </label>
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/ff6b6b/ffffff?text=DL" alt="Dracoleón">
+                        <span class="option-text">b) Dracoleón</span>
+                    </label>
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/4a90e2/ffffff?text=G" alt="Grifo nevado">
+                        <span class="option-text">c) Grifo nevado</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Pregunta 5 -->
+            <div class="question" data-question="5">
+                <h3>5. Parte de la experiencia va a ser buscar el atuendo perfecto para tu héroe:</h3>
+                <div class="options">
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/ff6b6b/ffffff?text=O1" alt="Opción 1">
+                        <span class="option-text">a) Opción 1</span>
+                    </label>
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/2ecc71/ffffff?text=O2" alt="Opción 2">
+                        <span class="option-text">b) Opción 2</span>
+                    </label>
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/4a90e2/ffffff?text=O3" alt="Opción 3">
+                        <span class="option-text">c) Opción 3</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Pregunta 6 -->
+            <div class="question" data-question="6">
+                <h3>6. Debes ocupar un rol entre tus compañeros, escoge el tuyo:</h3>
+                <div class="options">
+                    <label class="option">
+                        <span class="option-text">a) Tanque - Estás dispuesto a proteger a tus aliados del daño y ocuparte de que los enemigos te ataquen solo a ti.</span>
+                    </label>
+                    <label class="option">
+                        <span class="option-text">b) Heal - Estás dispuesto a sanar a tus aliados cuando reciban daño.</span>
+                    </label>
+                    <label class="option">
+                        <span class="option-text">c) DPS - Indica que estás dispuesto a inflingir daño a tus enemigos.</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Pregunta 7 -->
+            <div class="question landscape" data-question="7">
+                <h3>7. Ahora déjate llevar por las vibras, qué escenario de Azeroth llama más tu atención:</h3>
+                <div class="options">
+                    <label class="option landscape">
+                        <img src="https://via.placeholder.com/300x160/ff6b6b/ffffff?text=Esc1" alt="Opción 1" class="landscape">
+                        <span class="option-text">a) Opción 1</span>
+                    </label>
+                    <label class="option landscape">
+                        <img src="https://via.placeholder.com/300x160/2ecc71/ffffff?text=Esc2" alt="Opción 2" class="landscape">
+                        <span class="option-text">b) Opción 2</span>
+                    </label>
+                    <label class="option landscape">
+                        <img src="https://via.placeholder.com/300x160/4a90e2/ffffff?text=Esc3" alt="Opción 3" class="landscape">
+                        <span class="option-text">c) Opción 3</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Pregunta 8 -->
+            <div class="question" data-question="8">
+                <h3>8. Estamos terminando el conjunto, selecciona esa mascota o compañero que quieres que siga a tu héroe:</h3>
+                <div class="options">
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/4a90e2/ffffff?text=L" alt="Lechuza">
+                        <span class="option-text">a) Lechuza</span>
+                    </label>
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/ff6b6b/ffffff?text=Lobo" alt="Lobo">
+                        <span class="option-text">b) Lobo</span>
+                    </label>
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/2ecc71/ffffff?text=E" alt="Esbirro">
+                        <span class="option-text">c) Esbirro</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Pregunta 9 -->
+            <div class="question" data-question="9">
+                <h3>9. World of Warcraft tiene varios personajes famosos que han marcado la historia, escoge el que te llame más la atención:</h3>
+                <div class="options">
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/2ecc71/ffffff?text=A" alt="Arthas Menethil">
+                        <span class="option-text">a) Arthas Menethil</span>
+                    </label>
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/4a90e2/ffffff?text=J" alt="Jaina Proudmore">
+                        <span class="option-text">b) Jaina Proudmore</span>
+                    </label>
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/ff6b6b/ffffff?text=S" alt="Sylvanas Windrunner">
+                        <span class="option-text">c) Sylvanas Windrunner</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Pregunta 10 -->
+            <div class="question" data-question="10">
+                <h3>10. ¿Qué es un mundo lleno de criaturas sin dragones? Escoge tu preferido</h3>
+                <div class="options">
+                    <label class="option">
+                        <img src="https://via.placeholder.com/48x48/4a90e2/ffffff?text=Alex" alt="Alexstrasza">
+                        <span class="
