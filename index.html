@@ -99,7 +99,7 @@
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px; /* ✅ Aumentado de 12px a 16px para las imágenes más grandes */
             font-size: 0.95em;
             position: relative;
         }
@@ -120,16 +120,16 @@
         }
 
         .option img {
-            width: 48px;
-            height: 48px;
+            width: 64px; /* ✅ AUMENTADO de 48px a 64px */
+            height: 64px; /* ✅ AUMENTADO de 48px a 64px */
             object-fit: cover;
-            border-radius: 8px;
+            border-radius: 10px; /* ✅ Aumentado ligeramente el border-radius */
             flex-shrink: 0;
         }
 
         .option.landscape img {
             width: 100%;
-            height: 80px;
+            height: 90px; /* ✅ Aumentado de 80px a 90px para mantener proporción */
             object-fit: cover;
         }
 
@@ -260,10 +260,15 @@
             
             .option {
                 padding: 14px 16px;
+                gap: 12px; /* ✅ Gap más pequeño en móviles */
+            }
+            
+            .option img {
+                width: 56px; /* ✅ Tamaño un poco más pequeño en móviles */
+                height: 56px;
             }
         }
-        * 
-        /* Mantén todo tu CSS original aquí */
+        /* ✅ Eliminado el CSS duplicado/erróneo al final */
     </style>
 </head>
 <body>
