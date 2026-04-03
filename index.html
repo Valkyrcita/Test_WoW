@@ -120,27 +120,19 @@
         }
 
         .option img {
-            width: 64px; /* ✅ AUMENTADO de 48px a 64px */
-            height: 64px; /* ✅ AUMENTADO de 48px a 64px */
+            width: 80px; /* ✅ AUMENTADO de 48px a 64px */
+            height: 80px; /* ✅ AUMENTADO de 48px a 64px */
             object-fit: cover;
             border-radius: 10px; /* ✅ Aumentado ligeramente el border-radius */
             flex-shrink: 0;
         }
 
        .option.landscape img {
-    width: 120px;  /* ✅ Ancho fijo más amplio */
-    height: 80px;  /* ✅ Altura fija optimizada */
+    width: 300px;  /* ✅ Ancho fijo más amplio */
+    height: 160px;  /* ✅ Altura fija optimizada */
     object-fit: cover;  /* ✅ Mantiene proporción sin estirar */
     border-radius: 10px;
     flex-shrink: 0;
-}
-
-/* ✅ Ajuste para móviles */
-@media (max-width: 480px) {
-    .option.landscape img {
-        width: 100px;  /* ✅ Más pequeño en móviles pero proporcionado */
-        height: 70px;
-    }
 }
 
         .result {
